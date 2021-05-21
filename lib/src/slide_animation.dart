@@ -5,10 +5,10 @@ import 'animation_configurator.dart';
 /// An animation that slides its child.
 class SlideAnimation extends StatelessWidget {
   /// The duration of the child animation.
-  final Duration? duration;
+  final Duration duration;
 
   /// The delay between the beginning of two children's animations.
-  final Duration? delay;
+  final Duration delay;
 
   /// The curve of the child animation. Defaults to [Curves.ease].
   final Curve curve;
@@ -30,14 +30,16 @@ class SlideAnimation extends StatelessWidget {
   ///
   /// The [child] argument must not be null.
   const SlideAnimation({
-    Key? key,
+    Key key,
     this.duration,
     this.delay,
     this.curve = Curves.ease,
-    double? verticalOffset,
-    double? horizontalOffset,
-    required this.child,
-  })   : verticalOffset = (verticalOffset == null && horizontalOffset == null) ? 50.0 : (verticalOffset ?? 0.0),
+    double verticalOffset,
+    double horizontalOffset,
+    @required this.child,
+  })  : verticalOffset = (verticalOffset == null && horizontalOffset == null)
+            ? 50.0
+            : (verticalOffset ?? 0.0),
         horizontalOffset = horizontalOffset ?? 0.0,
         super(key: key);
 
@@ -51,7 +53,8 @@ class SlideAnimation extends StatelessWidget {
   }
 
   Widget _slideAnimation(Animation<double> animation) {
-    Animation<double> offsetAnimation(double offset, Animation<double> animation) {
+    Animation<double> offsetAnimation(
+        double offset, Animation<double> animation) {
       return Tween<double>(begin: offset, end: 0.0).animate(
         CurvedAnimation(
           parent: animation,
@@ -62,8 +65,12 @@ class SlideAnimation extends StatelessWidget {
 
     return Transform.translate(
       offset: Offset(
-        horizontalOffset == 0.0 ? 0.0 : offsetAnimation(horizontalOffset, animation).value,
-        verticalOffset == 0.0 ? 0.0 : offsetAnimation(verticalOffset, animation).value,
+        horizontalOffset == 0.0
+            ? 0.0
+            : offsetAnimation(horizontalOffset, animation).value,
+        verticalOffset == 0.0
+            ? 0.0
+            : offsetAnimation(verticalOffset, animation).value,
       ),
       child: child,
     );
